@@ -49,7 +49,7 @@ namespace NZWalks.API.Controllers
         }
         [HttpGet]
         [Route("{id:guid}")]
-        [ActionName("GetRegionAsync")]
+        [ActionName("GetRegionByIdAsync")]
         public async Task<IActionResult> GetRegionByIdAsync(Guid id)
         {
             var region = await regionRepository.GetRegionAsync(id);
