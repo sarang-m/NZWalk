@@ -75,6 +75,13 @@ namespace NZWalks.API.Controllers
         [HttpPost]
         public async Task<IActionResult> AddRegionAsync(AddRegionRequest addRegionRequest)
         {
+
+            //Validate AddRegion Method
+            bool isValid = ValidateAddRegion(addRegionRequest);
+            if (!isValid)
+            {
+                return BadRequest();
+            }
             //Request(DTO) to Domain Model
             var region = new Model.Domain.Region()
             {
@@ -163,6 +170,45 @@ namespace NZWalks.API.Controllers
             return Ok(regionDTO);
 
 
+        }
+
+        private bool ValidateAddRegion(AddRegionRequest addRegionRequest)
+        {
+            if (addRegionRequest == null)
+            {
+                ModelState.AddModelError(nameof(addRegionRequest), " Region data is InvalidCastException");
+                return false;
+
+            }
+            if (string.IsNullOrEmpty(addRegionRequest.Code))
+            {
+                ModelState.AddModelError(nameof(addRegionRequest.Code), "Invalid Code");
+            }
+            if (string.IsNullOrEmpty(addRegionRequest.Name))
+            {
+                ModelState.AddModelError(nameof(addRegionRequest.Name), "Invalid Name");
+            }
+            if (addRegionRequest.Area <= 0)
+            {
+                ModelState.AddModelError(nameof(addRegionRequest.Area), "Invalid Area Code");
+            }
+            if (double.IsNormal(addRegionRequest.Lat))
+            {
+                ModelState.AddModelError(nameof(addRegionRequest.Lat), "Invalid Latitude");
+            }
+            if (double.IsNormal(addRegionRequest.Long))
+            {
+                ModelState.AddModelError(nameof(addRegionRequest.Long), "Invalid Longitude");
+            }
+            if (addRegionRequest.Population <= 0)
+            {
+                ModelState.AddModelError(nameof(addRegionRequest.Population), "Invalid Population");
+            }
+            if (ModelState.ErrorCount > 0)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
