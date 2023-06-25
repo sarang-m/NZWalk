@@ -80,7 +80,7 @@ namespace NZWalks.API.Controllers
             bool isValid = ValidateAddRegion(addRegionRequest);
             if (!isValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
             //Request(DTO) to Domain Model
             var region = new Model.Domain.Region()
