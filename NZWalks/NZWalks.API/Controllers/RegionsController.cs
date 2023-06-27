@@ -192,11 +192,11 @@ namespace NZWalks.API.Controllers
             {
                 ModelState.AddModelError(nameof(addRegionRequest.Area), "Invalid Area Code");
             }
-            if (double.IsNormal(addRegionRequest.Lat))
+            if (double.IsFinite(addRegionRequest.Lat) && Math.Abs(addRegionRequest.Lat) <= 90)
             {
                 ModelState.AddModelError(nameof(addRegionRequest.Lat), "Invalid Latitude");
             }
-            if (double.IsNormal(addRegionRequest.Long))
+            if (double.IsFinite(addRegionRequest.Long) && Math.Abs(addRegionRequest.Long) <= 180)
             {
                 ModelState.AddModelError(nameof(addRegionRequest.Long), "Invalid Longitude");
             }
