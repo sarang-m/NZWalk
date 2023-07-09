@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NZWalks.API.Model.Domain;
 using NZWalks.API.Model.DTO;
@@ -9,6 +10,7 @@ namespace NZWalks.API.Controllers
 {
     [ApiController]
     [Route("Regions")]
+    [Authorize]
     public class RegionsController : Controller
     {
         private readonly IRegionRepository regionRepository;
