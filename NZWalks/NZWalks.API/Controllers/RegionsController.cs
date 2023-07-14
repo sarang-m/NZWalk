@@ -11,7 +11,7 @@ namespace NZWalks.API.Controllers
     [ApiController]
     [Route("Regions")]
     [Authorize]
-    public class RegionsController : Controller
+    public class RegionsController : ControllerBase
     {
         private readonly IRegionRepository regionRepository;
         private readonly IMapper mapper;
