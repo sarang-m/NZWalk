@@ -16,6 +16,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<NZWalksDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("NZWalks")));
 builder.Services.AddScoped<IRegionRepository, RegionRepository>();
 builder.Services.AddSingleton<IUserRepository, StaticUserRepository>();
+builder.Services.AddScoped<ITokenHandler,NZWalks.API.Repositories.TokenHandler>();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options => 

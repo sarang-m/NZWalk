@@ -9,22 +9,27 @@ namespace NZWalks.API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
-        public AuthController(IUserRepository userRepository)
+        private readonly ITokenHandler tokenHandler;
+
+        public AuthController(IUserRepository userRepository, ITokenHandler tokenHandler)
         {
             this._userRepository = userRepository;
-
+            this.tokenHandler = tokenHandler;
         }
         [HttpPost]
         [Route("login")]
         public async Task<IActionResult> Login(LoginRequest loginRequest)
         {
             //check if user is authenticated
-            bool isAuthenticated = await _userRepository.Authenticate(loginRequest.UserName, loginRequest.Password);
-            if (!isAuthenticated)
+            var user = await _userRepository.Authenticate(loginRequest.UserName, loginRequest.Password);
+            if (user != null)
             {
-                return BadRequest("User name or Password is incorrect");
+                 //Generate JWT token
+                var token = await tokenHandler.CreateToken(user);
+                return Ok(token);
             }
-            return View();
+            return BadRequest("Username or password is incorrect");
+            
         }
     }
 }

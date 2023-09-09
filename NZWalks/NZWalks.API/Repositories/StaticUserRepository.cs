@@ -27,14 +27,10 @@ namespace NZWalks.API.Repositories
                 Roles = new List<string>{"reader", "writer"}
             }
         };
-        public async Task<bool> Authenticate(string username, string password)
+        public async Task<User> Authenticate(string username, string password)
         {
             var user = Users.Find(x => x.Username.Equals(username, StringComparison.InvariantCultureIgnoreCase) && x.Password == password);
-            if (user != null)
-            {
-                return true;
-            }
-            return false;
+            return user;
         }
     }
 }
